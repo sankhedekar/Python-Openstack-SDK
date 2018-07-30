@@ -1,5 +1,9 @@
 # OpenstackSDK
-Create Network topology using OpenStackSDK
+Using Python OpenStackSDK
+
+--------------------------------------------------------------------------------------
+
+Python OpenstackSDK is a client library for building applications to work with OpenStack clouds.
 
 --------------------------------------------------------------------------------------
 
