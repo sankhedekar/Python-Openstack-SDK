@@ -99,3 +99,4 @@ This will take around 1-1.5 hrs to make the Openstack again working. Everything 
 After installation, put the machine in saved state and clone the machine in virtual box.
 
 --------------------------------------------------------------------------------------
+ 
