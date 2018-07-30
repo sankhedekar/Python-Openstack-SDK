@@ -40,7 +40,7 @@ Port 6080 - Console into instance.
 
 Installation of Devstack on Virtual Machine:
 
-Openstack
+Openstack:
 Openstack version: 3.15.0
 Devstack version: rocky
 
@@ -55,6 +55,7 @@ $ nmtui
 
 Set the connection mentioned above and restart the service.
 $ service network restart
+
 After the internet connection is working.
 $ sudo yum update
 $ sudo yum upgrade
@@ -63,13 +64,23 @@ $ sudo yum install vim
 $ sudo yum install git
 $ git clone https://git.openstack.org/openstack-dev/devstack
 $ cd devstack
+
 Create the local.conf file inside the devstack folder and add the following lines.
+devstack $ vim local.conf
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+HOST_IP=127.0.0.1
+
 HOST_IP is not necessary but while installation if you get an error stating that there is no HOST_IP in local.conf file, just add the host ip to the local.conf file and restart the installation.
 
 Start the installation by running the following command.
 $ ./stack.sh
 
 It takes about 60 minutes depending on the speed of internet, the system configuration on virtual box to complete.
+
 This will be the final message after the installation of devstack on your virtual machine.
 It will mention the host IP address, users, password, dashboard IP address, installed devstack version and OS version.
 
@@ -77,26 +88,26 @@ It will mention the host IP address, users, password, dashboard IP address, inst
 
 Troubleshooting:
 
-In case if you cannot connect to the Openstack website or SSH after installing the devstack, then the traffic on those ports or IP’s might be blocked by the firewall.
+-- In case if you cannot connect to the Openstack website or SSH after installing the devstack, then the traffic on those ports or IP’s might be blocked by the firewall.
 Flush the iptables (Not recommended on the production) or add the iptables rules to accept the traffic from different ports and IP’s.
 $ sudo ipables -F
 $ sudo iptables -L
 
-While shutting down the Virtual Machine always close the machine in save state or else you will need to install the devstack again since its main use case is not running a cloud so it will fail after a reboot.
+-- While shutting down the Virtual Machine always close the machine in save state or else you will need to install the devstack again since its main use case is not running a cloud so it will fail after a reboot.
 
-If any time you get an error saying, “Missing value auth-url required for auth plugin password”
+-- If any time you get an error saying, “Missing value auth-url required for auth plugin password”
 Source openrc so that it exports the variables.
 devstack$ source openrc
 WARNING: setting legacy OS_TENANT_NAME to support cli tools.
 devstack$ export | grep OS_
 
-Always close the machine in save state. If you shut down the virtual machine, the Openstack will not work. We need to do the following to start the Openstack again.
+-- Always close the machine in save state. If you shut down the virtual machine, the Openstack will not work. We need to do the following to start the Openstack again.
 $ ./unstack.sh
 $ ./clean.sh
 $ ./stack.sh
 
-This will take around 1-1.5 hrs to make the Openstack again working. Everything configured inside the Openstack will be deleted as this will be new installation.
-After installation, put the machine in saved state and clone the machine in virtual box.
+-- This will take around 1-1.5 hrs to make the Openstack again working. Everything configured inside the Openstack will be deleted as this will be new installation.
+-- After installation, put the machine in saved state and clone the machine in virtual box.
 
 --------------------------------------------------------------------------------------
  
